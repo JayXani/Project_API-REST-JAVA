@@ -1,4 +1,4 @@
-package br.com.apirest.todolist.users;
+package br.com.apirest.todolist.tasks;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,20 +12,27 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
-@Entity(name = "tb_users") // Declared UserModel who table in database
-public class UserModel {
+@Entity(name = "tb_tasks")
+public class TasksModel {
     @Id
     @GeneratedValue(generator = "UUID")
-    private UUID id;
+    private UUID tasks_ID;
+    private UUID userID;
 
-    @Column(unique = true)
-    private String userName;
+    @Column(length = 50)
+    private String title;
+    private LocalDateTime startAt;
+    private LocalDateTime endAt;
 
-    private int age;
-    private String password;
     @CreationTimestamp
     private LocalDateTime created_at;
 
     @UpdateTimestamp
     private LocalDateTime updated_at;
+
+    public void setTitle(String title) throws Exception{
+        if(title.length() > 50){
+            throw new Exception("Title cannot have more the 50 characters");
+        }
+    }
 }
